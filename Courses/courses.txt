@@ -1,0 +1,44 @@
+A router is composed of multiples routes, wich are composed of a destination, and a gateway.
+The gateway is the next router IP needed. As an exemple, in a line of router, the gateway will be the IP of the interface of the next router
+The destination is the IP of the area we are trying to reach, can ut default or 0.0.0.0/0 to send it to wherever out of our own local network
+
+For the available IP's (more likely the last .xx) you can refer to the table.md from this file.
+
+1. Les Adresses Interdites (Réservées)
+Ces adresses ont des fonctions spécifiques et ne peuvent pas être attribuées à une interface de machine ou de routeur :
+
+127.0.0.0 à 127.255.255.255 (Loopback) : Utilisées pour que l'ordinateur se parle à lui-même. La plus connue est 127.0.0.1 (localhost).
+
+0.0.0.0 : Représente "tous les réseaux" ou une absence d'adresse. Elle ne peut être utilisée que dans les tables de routage (Default Route).
+
+224.0.0.0 à 239.255.255.255 (Multicast) : Réservées pour envoyer des données à un groupe de machines simultanément.
+
+240.0.0.0 à 255.255.255.254 : Adresses expérimentales ou réservées pour un usage futur.
+
+255.255.255.255 : L'adresse de Broadcast limitée (pour crier à tout le monde sur le réseau local).
+
+2. Les Adresses "Spéciales" de chaque sous-réseau
+Pour chaque plage IP que tu crées (par exemple 42.5.4.0/24), il y a toujours deux adresses que tu ne peux pas donner à un PC :
+
+L'adresse de Réseau (Network ID) : La toute première adresse de la plage (ex: .0).
+
+L'adresse de Diffusion (Broadcast ID) : La toute dernière adresse de la plage (ex: .255).
+
+3. Les Adresses à éviter (Confusion et Risques)
+Ces adresses sont tout à fait utilisables, mais elles sont "piégeuses" :
+
+192.168.x.x (Classe C privée) :
+
+Pourquoi l'éviter ? C'est la plage par défaut de presque toutes les box internet réelles au monde. Si tu travailles sur un simulateur ou un VPN, utiliser cette plage peut créer un conflit entre ton "vrai" réseau domestique et ton réseau virtuel.
+
+10.0.0.x ou 172.16.x.x à 172.31.x.x :
+
+Ce sont les autres plages privées standards. Comme elles sont partout, il est facile de s'emmêler les pinceaux si tu as plusieurs sous-réseaux.
+
+169.254.x.x (APIPA) :
+
+Confusion : C'est l'adresse que Windows s'attribue tout seul quand il n'arrive pas à contacter un serveur DHCP. Si tu vois cette adresse, c'est généralement signe que ton réseau est en panne. En utiliser une volontairement rendrait le diagnostic très difficile.
+
+Les adresses de "bordure" des masques complexes :
+
+Si tu utilises un masque comme /28 (Magic Number 16), évite d'utiliser des adresses comme .15 ou .16 sans vérifier tes calculs, car ce sont souvent des adresses de broadcast ou de réseau déguisées.
